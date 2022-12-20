@@ -9,10 +9,22 @@
             Menu
             <i class="fas fa-bars"></i>
         </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ms-auto py-4 py-lg-0">
-                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ route('login') }}">Login</a></li>
-                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ route('register') }}">Register</a></li>
+        {{-- Dropdown menu --}}
+        <div class="dropdown">
+            <button class="btn btn-light dropdown-toggle " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                {{ auth()->user()->name }}
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" href="{{route('profile.show')}}">Profile</a></li>
+                <form method="post" action="{{ route('logout') }}">
+                    @csrf
+                    <li>
+                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                            this.closest('form').submit();" role="button">
+                            {{ __('Log Out') }}
+                        </a>
+                    </li>
+                </form>
             </ul>
         </div>
     </div>
@@ -85,14 +97,17 @@
             </div>
         </div>
     </article>
-</body>
-@include('user.layouts.footer')
 
 <!-- Bootstrap core JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <!-- Core theme JS -->
 <script src="{{asset('user/js/scripts.js')}}"></script>
+
+</body>
+
+@include('user.layouts.footer')
+
 </html>
 
 

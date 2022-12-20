@@ -21,9 +21,9 @@ class Post extends Model
         return $this->belongsToMany(Category::class, 'category_posts')->withTimestamps();
     }
 
-    //fix it
-    public function getRouteKeyName()
-    {
-        return 'slug';
-    }
+
+//    public function getRouteKeyName()
+//    {
+//        return 'slug';
+//    }
 }

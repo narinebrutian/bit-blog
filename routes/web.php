@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\User\UserHomeController;
 use App\Http\Controllers\User\UserPostController;
+use App\Http\Controllers\Admin\LoginController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,6 +21,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//Guest routes
+
+Route::namespace('User')->get('/', [UserHomeController::class, 'index'])->name('home');
+
 //User Routes
 
 Route::middleware([
@@ -27,8 +32,6 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified'
 ])->namespace('User')->group( function(){
-
-    Route::get('/', [UserHomeController::class, 'index'])->name('home');
 
     Route::get('post/{id}', [UserPostController::class, 'post'])->name('post');
 
@@ -38,34 +41,6 @@ Route::middleware([
 
 });
 
-//Admin Routes
-
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified'
-])->namespace('Admin')->group(function (){
-
-    Route::get('admin/home', [HomeController::class, 'index'])->name('admin-home');
-
-});
-
-
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified'
-])->prefix('admin')->group(function() {
-
-    Route::resource('/user', UserController::class);
-
-    Route::resource('/post', PostController::class);
-
-    Route::resource('/tag', TagController::class);
-
-    Route::resource('/category', CategoryController::class);
-
-});
 
 //default jetstream routes
 
@@ -78,3 +53,6 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+
+//admin
+require 'admin.php';

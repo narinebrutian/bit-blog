@@ -51,7 +51,7 @@ class PostController extends Controller
             'image' => $request->image
         ]);
 
-        $path = Storage::disk('local')->putFile('public/images', $request->image);
+        $path = Storage::disk('local') -> putFile('public/images', $request->image);
         $post->image = $path;
 
         $post->save();
@@ -59,12 +59,12 @@ class PostController extends Controller
         $post->tags()->sync($request->tags);
         $post->categories()->sync($request->categories);
 
-        return redirect()->route('post.index')->with('success','Post created successfully!');
+        return redirect()->route('post.index') -> with('success','Post created successfully!');
     }
 
     /**
      * @param $id
-     * @return string
+     * @return void
      */
     public function show($id)
     {
@@ -79,7 +79,7 @@ class PostController extends Controller
     {
         $tags = Tag::all();
         $categories = Category::all();
-        $post = Post::with('tags', 'categories')->findOrFail($id);
+        $post = Post::with('tags', 'categories') -> findOrFail($id);
 
         return view('admin.post.edit', compact('post', 'tags', 'categories'));
     }
@@ -100,17 +100,18 @@ class PostController extends Controller
         $post->status = $request->status;
 
         if ($request->hasFile('image')){
-            $path = Storage::disk('local')->put('public/images', $request->file('image'));
+            $path = Storage::disk('local') -> put('public/images', $request -> file('image'));
         }
+        //fix else
 
         $post->image = $path;
 
-        $post->tags()->sync($request->tags);
-        $post->categories()->sync($request->categories);
+        $post->tags() -> sync($request->tags);
+        $post->categories() -> sync($request->categories);
 
         $post->update();
 
-        return redirect()->route('post.index')->with('success','Post updated successfully!');
+        return redirect() -> route('post.index') -> with('success','Post updated successfully!');
 
     }
 
@@ -123,7 +124,7 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
         $post->delete();
 
-        return redirect()->back();
+        return redirect() -> back();
     }
 }
 
@@ -132,3 +133,6 @@ class PostController extends Controller
 //Normally cursor() method is used to reduce memory usage during fetching large amount of data.
 //
 //On the other hand all() method is used for fetching all the data from a particular table.
+//
+//cursor(): High Speed
+//chunk(): Constant Memory Usage

@@ -3,80 +3,113 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PermissionRequest;
+use App\Http\Requests\RoleRequest;
+use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
     /**
      * @return View
      */
-    public function index()
+    public function index(): View
     {
-        return view('admin.user.show');
+        $users = User::all();
+
+        return view('admin.users.show', compact('users'));
     }
 
     /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @param User $user
+     * @return View
      */
-    public function create()
+    public function show(User $user): View
     {
-        return view('admin.user.create');
+        $roles = Role::all();
+        $permissions = Permission::all();
+
+        return view('admin.users.role', compact('user', 'roles', 'permissions'));
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param RoleRequest $request
+     * @param User $user
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function assignRole(RoleRequest $request, User $user): RedirectResponse
     {
-        //
+        if ($user->hasRole($request->role)) {
+            return back()->with('message', 'Role exists.');
+        }
+
+        $user->assignRole($request->role);
+        return back()->with('message', 'Role assigned.');
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param User $user
+     * @param Role $role
+     * @return RedirectResponse
      */
-    public function show($id)
+    public function removeRole(User $user, Role $role): RedirectResponse
     {
-        //
+        if ($user->hasRole($role)) {
+            $user->removeRole($role);
+            return back()->with('message', 'Role removed.');
+        }
+
+        return back()->with('message', 'Role not exists.');
+    }
+
+
+    /**
+     * @param PermissionRequest $request
+     * @param User $user
+     * @return RedirectResponse
+     */
+    public function givePermission(PermissionRequest $request, User $user): RedirectResponse
+    {
+        if ($user->hasPermissionTo($request->permission)) {
+
+            return back()->with('message', 'Permission exists.');
+        }
+        $user->givePermissionTo($request->permission);
+
+        return back()->with('message', 'Permission added.');
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param User $user
+     * @param Permission $permission
+     * @return RedirectResponse
      */
-    public function edit($id)
+    public function revokePermission(User $user, Permission $permission): RedirectResponse
     {
-        //
+        if ($user->hasPermissionTo($permission)) {
+            $user->revokePermissionTo($permission);
+            return back()->with('message', 'Permission revoked.');
+        }
+
+        return back()->with('message', 'Permission does not exist.');
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param User $user
+     * @return RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function destroy(User $user): RedirectResponse
     {
-        //
-    }
+        if ($user->hasRole('admin')) {
+            return back()->with('message', 'You are admin.');
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $user->delete();
+
+        return back()->with('message', 'User deleted.');
     }
 }

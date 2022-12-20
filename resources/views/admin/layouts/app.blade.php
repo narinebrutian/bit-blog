@@ -16,6 +16,10 @@
 
             @show
 
+        @section('profile-content')
+
+            @show
+
         @include('admin.layouts.footer')
 
     </div>
@@ -50,5 +54,7 @@
     <script src="{{asset('admin/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js')}}"></script>
     <!-- AdminLTE App -->
     <script src="{{asset('admin/dist/js/adminlte.js')}}"></script>
+    <!-- Bootstrap core JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
