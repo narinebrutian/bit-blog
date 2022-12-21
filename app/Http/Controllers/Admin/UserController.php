@@ -37,6 +37,34 @@ class UserController extends Controller
     }
 
     /**
+     * @param int $id
+     * @return View
+     */
+    public function edit(int $id): View
+    {
+        $user = User::findOrFail($id);
+
+        return view('admin.users.edit', compact('user'));
+    }
+
+    /**
+     * @param Request $request
+     * @param int $id
+     * @return RedirectResponse
+     */
+    public function update(Request $request,int $id): RedirectResponse
+    {
+        $user = User::findOrFail($id);
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+
+        $user->update();
+
+        return redirect()->route('users.index')->with('success', 'User info updated successfully!');
+    }
+
+    /**
      * @param RoleRequest $request
      * @param User $user
      * @return RedirectResponse

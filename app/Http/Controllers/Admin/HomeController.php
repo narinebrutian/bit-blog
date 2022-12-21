@@ -20,6 +20,6 @@ class HomeController extends Controller
      */
     public function showAdminProfile(): View
     {
-        return view('admin.profile');
+        return view('admin.profile.show');
     }
 }

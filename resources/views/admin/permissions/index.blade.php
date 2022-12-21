@@ -71,12 +71,12 @@
                                             <td>{{ $loop->index + 1 }}</td>
                                             <td>{{ $permission->name }}</td>
                                             <td>
-                                                <a href="{{ route('permission.edit', $permission->id) }}">
+                                                <a href="{{ route('permissions.edit', $permission->id) }}">
                                                     <button class="btn btn-warning">Edit</button>
                                                 </a>
                                             </td>
                                             <td>
-                                                <form action="{{ route('permission.destroy', $permission->id) }}" method="POST">
+                                                <form action="{{ route('permissions.destroy', $permission->id) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
                                                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -100,7 +100,7 @@
                                                     </div>
                                                 </form>
                                                 <!-- Modal -->
-                                                <button class="btn btn-danger" data-id="{{$post->id}}" data-toggle="modal" data-target="#exampleModal">Delete</button>
+                                                <button class="btn btn-danger" data-id="{{$permission->id}}" data-toggle="modal" data-target="#exampleModal">Delete</button>
                                             </td>
                                         </tr>
                                     @endforeach

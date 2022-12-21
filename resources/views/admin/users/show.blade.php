@@ -41,8 +41,8 @@
                                         <th class="sorting sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">ID</th>
                                         <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">User Name</th>
                                         <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Email</th>
-                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">Edit</th>
                                         <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">Role</th>
+                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">Edit</th>
                                         <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Delete</th>
                                     </tr>
                                     </thead>
@@ -55,14 +55,12 @@
                                             <td>{{ $user->email }}</td>
                                             <td>role sample</td>
                                             <td>
-                                                <a href="">
-                                        {{--{{ route('user.edit', $user->id) }}--}}
+                                                <a href="{{ route('users.edit', $user->id) }}">
                                                     <button type="submit" class="btn btn-warning">Edit</button>
                                                 </a>
                                             </td>
-
                                             <td>
-                                                <form action="{{ route('user.destroy', $user->id) }}" method="POST">
+                                                <form action="{{ route('users.destroy', $user->id) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
                                                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -96,8 +94,8 @@
                                         <th rowspan="1" colspan="1">ID</th>
                                         <th rowspan="1" colspan="1">User Name</th>
                                         <th rowspan="1" colspan="1">Email</th>
-                                        <th rowspan="1" colspan="1">Edit</th>
                                         <th rowspan="1" colspan="1">Role</th>
+                                        <th rowspan="1" colspan="1">Edit</th>
                                         <th rowspan="1" colspan="1">Delete</th>
                                     </tr>
                                     </tfoot>

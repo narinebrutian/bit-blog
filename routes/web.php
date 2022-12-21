@@ -33,6 +33,12 @@ Route::middleware([
     'verified'
 ])->namespace('User')->group( function(){
 
+    Route::get('/', [UserHomeController::class, 'index'])->name('home');
+
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+
     Route::get('post/{id}', [UserPostController::class, 'post'])->name('post');
 
     Route::get('post/category/{category}', [UserHomeController::class, 'category'])->name('category');
@@ -41,18 +47,6 @@ Route::middleware([
 
 });
 
-
-//default jetstream routes
-
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified'
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-});
 
 //admin
 require 'admin.php';
