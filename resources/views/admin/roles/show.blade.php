@@ -25,7 +25,7 @@
                             <h3 class="card-title">Roles</h3>
                         </div>
                         <div class="col-lg-offset-5">
-                            <a class="btn btn-success" href="">Add New</a>
+                            <a class="btn btn-success" href="{{route('role.create')}}">Add New</a>
                         </div>
                     </div>
 
@@ -51,12 +51,13 @@
                                             <td>{{ $loop->index + 1 }}</td>
                                             <td>{{ $role->name }}</td>
                                             <td>
-                                                <a href="{{ route('role.edit', $role->id) }}">
+                                                <a href="{{ route('role.edit', $role->id ) }}">
                                                     <button type="submit" class="btn btn-warning">Edit</button>
                                                 </a>
                                             </td>
                                             <td>
-                                                <form action="{{ route('roles.permissions.revoke', $role->id) }}" method="POST">
+                                                {{--                                                        {{ route('roles.permissions.revoke', $role->id, $permission->id) }}--}}
+                                                <form action="{{ route('role.destroy', $role->id ) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
                                                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -83,6 +84,7 @@
                                             </td>
                                         </tr>
                                     @endforeach
+
                                     </tbody>
 
                                     <tfoot>

@@ -16,15 +16,6 @@
         <section class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1>Blank Page</h1>
-                    </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Blank Page</li>
-                        </ol>
-                    </div>
                 </div>
             </div><!-- /.container-fluid -->
         </section>
@@ -42,7 +33,7 @@
                             <h3 class="card-title">Posts</h3>
                         </div>
                         <div class="col-lg-offset-5">
-                            <a class="btn btn-success" href="{{ route('post.create') }}">Add New</a>
+                            <a class="btn btn-success" href="{{ route('permissions.create') }}">Add New</a>
                         </div>
                     </div>
                 </div>
@@ -54,9 +45,8 @@
                                     <thead>
                                     <tr>
                                         <th class="sorting sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" >ID</th>
-                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" >Title</th>
-                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" >Subtitle</th>
-                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" >Slug</th>
+                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" >Name</th>
+                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" >Guard Name</th>
                                         <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" >Created at</th>
                                         <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" >Edit</th>
                                         <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" >Delete</th>
@@ -69,7 +59,9 @@
                                     @foreach($permissions as $permission)
                                         <tr>
                                             <td>{{ $loop->index + 1 }}</td>
-                                            <td>{{ $permission->name }}</td>
+                                            <td>{{ $permission -> name }}</td>
+                                            <td>{{ $permission -> guard_name }}</td>
+                                            <td>{{ $permission -> created_at }}</td>
                                             <td>
                                                 <a href="{{ route('permissions.edit', $permission->id) }}">
                                                     <button class="btn btn-warning">Edit</button>
@@ -109,9 +101,8 @@
                                     <tfoot>
                                     <tr>
                                         <th rowspan="1" colspan="1">ID</th>
-                                        <th rowspan="1" colspan="1">Title</th>
-                                        <th rowspan="1" colspan="1">Subtitle</th>
-                                        <th rowspan="1" colspan="1">Slug</th>
+                                        <th rowspan="1" colspan="1">Name</th>
+                                        <th rowspan="1" colspan="1">Guard name</th>
                                         <th rowspan="1" colspan="1">Created at</th>
                                         <th rowspan="1" colspan="1">Edit</th>
                                         <th rowspan="1" colspan="1">Delete</th>

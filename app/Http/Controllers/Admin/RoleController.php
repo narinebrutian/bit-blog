@@ -16,13 +16,14 @@ class RoleController extends Controller
     public function index()
     {
         $roles = Role::whereNotIn('name', ['admin'])->get();
+        $permissions = Permission::all();
 
-        return view('admin.users.role', compact('roles'));
+        return view('admin.roles.show', compact('roles', 'permissions'));
     }
 
     public function create()
     {
-        return view('admin.users.create');
+        return view('admin.roles.create');
     }
 
     public function store(RoleRequest $request)
@@ -31,7 +32,7 @@ class RoleController extends Controller
             'name' => $request->name
         ]);
 
-        return redirect()->route('admin.roles.index')->with('message', 'Role Created successfully.');
+        return redirect()->route('role.index')->with('message', 'Role Created successfully.');
     }
 
     public function edit(Role $role)
