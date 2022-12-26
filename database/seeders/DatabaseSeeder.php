@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(AdminsTableSeeder::class);
+        $this->call(SuperAdminsTableSeeder::class);
 
         $this->call([PermissionSeeder::class]);
 

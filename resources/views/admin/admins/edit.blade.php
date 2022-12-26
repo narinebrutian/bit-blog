@@ -17,7 +17,7 @@
                     <!-- general form elements -->
                     <div class="card card-outline card-info">
                         <div class="card-header">
-                            <h1 class="card-title">Create a role</h1>
+                            <h1 class="card-title">Admins</h1>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
@@ -26,29 +26,26 @@
 
                         @include('components.messages')
 
-                        <form role="form" action="{{ route('role.store') }}" method="post">
+                        <form role="form" action="{{ route('admins.update', $admin->id) }}" method="post">
                             @csrf
+                            @method('PATCH')
                             <div class="card-body">
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <label for="name">Role name</label>
+                                        <label for="name">Admin name</label>
                                         <input type="text" class="form-control" name="name" id="name"
-                                               placeholder="Role name">
+                                               value="{{$admin->name}}" placeholder="Admin name">
                                     </div>
-                                    <div class="form-group ml-4">
-                                        @foreach($permissions as $permission)
-                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                            <label class="form-check-label" for="flexCheckDefault">
-                                                {{ $permission->name }}
-                                            </label><br>
-                                        @endforeach
+                                    <div class="form-group">
+                                        <label for="slug">Tag Slug</label>
+                                        <input type="text" class="form-control" name="slug" id="slug"
+                                               value="{{$admin->slug}}" placeholder="Slug">
                                     </div>
-
                                 </div>
                             </div>
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-success">Submit</button>
-                                <a href="{{ route('role.index') }}" class="btn btn-warning">Back</a>
+                                <a href="{{ route('tag.index') }}" class="btn btn-warning">Back</a>
                             </div>
                         </form>
                     </div>

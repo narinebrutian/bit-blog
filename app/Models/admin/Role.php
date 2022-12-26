@@ -10,4 +10,12 @@ class Role extends Model
     use HasFactory;
 
     protected $fillable = ['name'];
+
+    public function admins(){
+
+        return $this->belongsTo(Admin::class);
+
+    }
+
+
 }

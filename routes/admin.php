@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\PermissionController;
@@ -36,6 +37,8 @@ Route::group(['prefix' => 'alliance-admin'], function() {
         Route::resource('/category', CategoryController::class);
 
         Route::resource('/role', RoleController::class);
+
+        Route::resource('/admins', AdminController::class);
 
         Route::post('/roles/{role}/permissions', [RoleController::class, 'givePermission'])->name('roles.permissions');
         Route::delete('/roles/{role}/permissions/{permission}', [RoleController::class, 'revokePermission'])->name('roles.permissions.revoke');

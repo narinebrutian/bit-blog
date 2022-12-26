@@ -23,7 +23,9 @@ class RoleController extends Controller
 
     public function create()
     {
-        return view('admin.roles.create');
+        $permissions = Permission::all();
+
+        return view('admin.roles.create', compact('permissions'));
     }
 
     public function store(RoleRequest $request)
@@ -42,10 +44,19 @@ class RoleController extends Controller
         return view('admin.roles.edit', compact('role', 'permissions'));
     }
 
-    public function update(RoleRequest $request, Role $role)
+    /**
+     * @param RoleRequest $request
+     * @param Role $role
+     * @param $id
+     * @return RedirectResponse
+     */
+    public function update(RoleRequest $request, Role $role, $id)
     {
-        $validated = $request->validate(['name' => ['required', 'min:3']]);
-        $role->update($validated);
+        $role = Role::findOrFail($id);
+
+        $role->name = $request->name;
+
+        $role->update();
 
         return to_route('admin.roles.index')->with('message', 'Role Updated successfully.');
     }
