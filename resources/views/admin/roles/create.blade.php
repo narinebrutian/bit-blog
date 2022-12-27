@@ -20,7 +20,7 @@
                             <h1 class="card-title">Create a role</h1>
                         </div>
                         <!-- /.card-header -->
-                        <!-- form start -->
+                        <!--  form start -->
 
                         @include('components.errors')
 
@@ -37,8 +37,8 @@
                                     </div>
                                     <div class="form-group ml-4">
                                         @foreach($permissions as $permission)
-                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                            <label class="form-check-label" for="flexCheckDefault">
+                                            <input class="form-check-input" type="checkbox" value="{{ $permission->id }}" id="flexCheckDefault">
+                                            <label class="form-check-label ml-2" for="flexCheckDefault">
                                                 {{ $permission->name }}
                                             </label><br>
                                         @endforeach

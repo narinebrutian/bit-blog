@@ -80,7 +80,7 @@
                                                         </div>
                                                     </div>
                                                 </form>
-                                                <button type="submit" class="btn btn-danger" data-id="{{$role->id}}" data-toggle="modal" data-target="#exampleModal">Delete</button>
+                                                <button type="submit" class="btn btn-danger" data-id="{{ $role->id }}" data-toggle="modal" data-target="#exampleModal">Delete</button>
                                             </td>
                                         </tr>
                                     @endforeach

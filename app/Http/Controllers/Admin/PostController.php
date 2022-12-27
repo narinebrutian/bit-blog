@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\StoreTagRequest;
 use App\Models\User\Category;
 use App\Models\User\Post;
 use App\Models\User\Tag;
@@ -38,7 +39,7 @@ class PostController extends Controller
      * @param StorePostRequest $request
      * @return RedirectResponse
      */
-    public function store(StorePostRequest $request): RedirectResponse
+    public function store(StorePostRequest $request, StoreTagRequest $tag): RedirectResponse
     {
         //$post = Post::create($request->validated());
 
@@ -102,7 +103,7 @@ class PostController extends Controller
         if ($request->hasFile('image')){
             $path = Storage::disk('local') -> put('public/images', $request -> file('image'));
         }
-        //fix else
+        //todo: fix else
 
         $post->image = $path;
 
@@ -135,4 +136,5 @@ class PostController extends Controller
 //On the other hand all() method is used for fetching all the data from a particular table.
 //
 //cursor(): High Speed
+        //vs
 //chunk(): Constant Memory Usage

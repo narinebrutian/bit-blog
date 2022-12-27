@@ -37,11 +37,12 @@ class PermissionController extends Controller
      */
     public function store(PermissionRequest $request): RedirectResponse
     {
-        $validated = $request->validate(['name' => 'required']);
 
-        Permission::create($validated);
+        Permission::create([
+            'name' => $request->name
+        ]);
 
-        return redirect()->route('admin.permissions.index')->with('message', 'Permission created.');
+        return redirect()->route('permissions.index')->with('message', 'Permission created.');
     }
 
     /**
@@ -61,24 +62,23 @@ class PermissionController extends Controller
      */
     public function edit(Permission $permission): View
     {
-        $roles = Role::all();
+        $roles = Permission::all();
 
         return view('admin.permissions.edit', compact('permission', 'roles'));
     }
 
     /**
      * @param PermissionRequest $request
-     * @param Permission $permission
-     * @param $id
+     * @param int $id
      * @return RedirectResponse
      */
-    public function update(PermissionRequest $request, Permission $permission, $id): RedirectResponse
+    public function update(PermissionRequest $request, int $id): RedirectResponse
     {
         $permission = Permission::findOrFail($id);
-
+        $permission->name = $request->name;
         $permission->update();
 
-        return redirect()->route('admin.permissions.index')->with('message', 'Permission updated.');
+        return redirect()->route('permissions.index')->with('message', 'Permission updated.');
     }
 
     /**
@@ -87,38 +87,9 @@ class PermissionController extends Controller
      */
     public function destroy(Permission $permission): RedirectResponse
     {
+
         $permission->delete();
 
-        return back()->with('message', 'Permission deleted.');
-    }
-
-    /**
-     * @param Request $request
-     * @param Permission $permission
-     * @return RedirectResponse
-     */
-    public function assignRole(RoleRequest $request, Permission $permission): RedirectResponse
-    {
-        if ($permission->hasRole($request->role)) {
-            return back()->with('message', 'Role exists.');
-        }
-
-        $permission->assignRole($request->role);
-        return back()->with('message', 'Role assigned.');
-    }
-
-    /**
-     * @param Permission $permission
-     * @param Role $role
-     * @return RedirectResponse
-     */
-    public function removeRole(Permission $permission, Role $role): RedirectResponse
-    {
-        if ($permission->hasRole($role)) {
-            $permission->removeRole($role);
-            return back()->with('message', 'Role removed.');
-        }
-
-        return back()->with('message', 'Role not exists.');
+        return redirect() -> route('permissions.index') -> with('message', 'Permission deleted.');
     }
 }
