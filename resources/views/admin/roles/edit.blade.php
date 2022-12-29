@@ -25,43 +25,50 @@
                         @include('components.errors')
 
                         @include('components.messages')
-
-                        <form role="form" action="{{ route('roles.permissions', $role->id) }}" method="post">
-                            @csrf
-                            @method('PATCH')
-                            <div class="card-body">
-                                <div class="col-lg-4">
+                        <div class="card-body">
+                            <div class="col-lg-4">
+                                <form role="form" action="{{ route('role.update', $role->id) }}" method="post">
+                                    @csrf
+                                    @method('PATCH')
                                     <div class="form-group">
                                         <label for="name">Role Name</label>
                                         <input type="text" class="form-control" name="name" id="name"
                                                value="{{$role->name}}" placeholder="Role name">
                                     </div>
+                                    <button type="submit" class="btn btn-outline-success">Update</button>
+                                    <a href="{{ route('role.index') }}" class="btn btn-warning">Back</a>
+                                </form>
+                                <form method="POST" action="{{ route('roles.permissions', $role->id) }}">
                                     <div class="mt-4 p-2">
                                         <h6><b>Role permissions</b></h6><br>
                                         @if($role->permissions)
                                             @foreach($role->permissions as $rolePermission)
-                                                <form action="{{ route('roles.permissions.revoke', [$role->id , $rolePermission->id]) }}" method="POST" onsubmit="return confirm('Are you sure?')">
+                                                <form
+                                                    action="{{ route('roles.permissions.revoke', [$role->id , $rolePermission->id]) }}"
+                                                    method="POST" onsubmit="return confirm('Are you sure?')">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-outline-primary">{{$rolePermission->name}}</button>
+                                                    <button type="submit"
+                                                            class="btn btn-outline-primary">{{$rolePermission->name}}</button>
                                                 </form>
                                             @endforeach
                                         @endif
                                     </div>
                                     <div class="form-check">
-                                        <select id="permission" class="form-select">
+                                        <select id="permission" name="permission" autocomplete="permission-name"
+                                                class="form-select">
                                             @foreach($permissions as $permission)
-                                                <option value="{{$permission->name}}">{{$permission->name}}</option>
+                                                <option value="{{$permission->name}}"> {{$permission->name}} </option>
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
+                                </form>
                             </div>
-                            <div class="card-footer">
-                                <button type="submit" class="btn btn-outline-success">Submit</button>
-                                <a href="{{ route('role.index') }}" class="btn btn-warning">Back</a>
-                            </div>
-                        </form>
+                        </div>
+                        <div class="card-footer">
+
+                        </div>
+
                     </div>
                     <!-- /.card -->
                 </div>

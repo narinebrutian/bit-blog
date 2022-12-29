@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PermissionRequest;
+use http\Client\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class PermissionController extends Controller
 {
@@ -85,5 +87,35 @@ class PermissionController extends Controller
         $permission->delete();
 
         return back()->with('message', 'Permission deleted.');
+    }
+
+    /**
+     * @param Request $request
+     * @param Permission $permission
+     * @return RedirectResponse
+     */
+    public function assignRole(Request $request, Permission $permission): RedirectResponse
+    {
+        if ($permission->hasRole($request->role)) {
+            return back()->with('message', 'Role exists.');
+        }
+
+        $permission->assignRole($request->role);
+        return back()->with('message', 'Role assigned.');
+    }
+
+    /**
+     * @param Permission $permission
+     * @param Role $role
+     * @return RedirectResponse
+     */
+    public function removeRole(Permission $permission, Role $role): RedirectResponse
+    {
+        if ($permission->hasRole($role)) {
+            $permission->removeRole($role);
+            return back()->with('message', 'Role removed.');
+        }
+
+        return back()->with('message', 'Role not exists.');
     }
 }
