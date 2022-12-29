@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\PermissionRequest;
 use App\Http\Requests\RoleRequest;
+use http\Client\Request;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -18,8 +17,7 @@ class RoleController extends Controller
      */
     public function index(): View
     {
-//        $roles = Role::whereNotIn('name', ['admin'])->get();
-        $roles =  Role::all();
+        $roles = Role::whereNotIn('name', ['admin'])->get();
         $permissions = Permission::all();
 
         return view('admin.roles.show', compact('roles', 'permissions'));
@@ -43,7 +41,7 @@ class RoleController extends Controller
     {
         Role::create([
             'name' => $request->name
-        ])->permissions()->sync($request->role);
+        ]);
 
         return redirect()->route('role.index')->with('message', 'Role Created successfully.');
     }
@@ -61,39 +59,35 @@ class RoleController extends Controller
 
     /**
      * @param RoleRequest $request
-     * @param $id
+     * @param int $id
      * @return RedirectResponse
      */
-    public function update(RoleRequest $request, $id): RedirectResponse
+    public function update(RoleRequest $request, int $id): RedirectResponse
     {
         $role = Role::findOrFail($id);
-
         $role->name = $request->name;
-
         $role->update();
 
         return to_route('role.index')->with('message', 'Role Updated successfully.');
     }
 
     /**
-     * @param int $id
-     * @return RedirectResponse
-     */
-    public function destroy(int $id): RedirectResponse
-    {
-        $role = Role::findOrFail($id);
-
-        $role->delete();
-
-        return redirect() -> route('role.index');
-    }
-
-    /**
-     * @param PermissionRequest $request
      * @param Role $role
      * @return RedirectResponse
      */
-    public function givePermission(PermissionRequest $request, Role $role): RedirectResponse
+    public function destroy(Role $role): RedirectResponse
+    {
+        $role->delete();
+
+        return back()->with('success', 'Role is deleted');
+    }
+
+    /**
+     * @param Request $request
+     * @param Role $role
+     * @return RedirectResponse
+     */
+    public function givePermission(Request $request, Role $role): RedirectResponse
     {
         if($role->hasPermissionTo($request->permission)){
             return back()->with('message', 'Permission exists.');

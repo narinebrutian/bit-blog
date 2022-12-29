@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
+
+
     use HasFactory;
 
     protected $fillable = ['name', 'slug'];
@@ -16,8 +18,5 @@ class Category extends Model
         return $this->belongsToMany(Post::class, 'category_posts')->orderByDesc('created_at')->paginate(5);
     }
 
-    public function getRouteKeyName()
-    {
-        return 'slug';
-    }
+
 }

@@ -82,7 +82,9 @@
                                 <div class="col-lg-6">
                                     <div class="mt-4 px-3 py-2 border-dashed border-gray-200 border rounded-lg">
                                         <label>Tags</label>
+
                                         <hr>
+
                                         @foreach($tags as $tag)
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" value="{{$tag->id}}" id="flexCheckDefault" name="tags[]">

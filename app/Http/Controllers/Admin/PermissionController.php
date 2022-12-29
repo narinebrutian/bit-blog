@@ -4,10 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PermissionRequest;
-use App\Http\Requests\RoleRequest;
-use App\Models\admin\Role;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Spatie\Permission\Models\Permission;
 
@@ -46,10 +43,8 @@ class PermissionController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return void
      */
     public function show($id)
     {
@@ -87,9 +82,8 @@ class PermissionController extends Controller
      */
     public function destroy(Permission $permission): RedirectResponse
     {
-
         $permission->delete();
 
-        return redirect() -> route('permissions.index') -> with('message', 'Permission deleted.');
+        return back()->with('message', 'Permission deleted.');
     }
 }

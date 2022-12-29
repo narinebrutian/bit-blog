@@ -15,7 +15,7 @@ class TagController extends Controller
      */
     public function index(): View
     {
-        $tags = Tag::all();
+        $tags = Tag::cursor();
 
         return view('admin.tag.show', compact('tags'));
     }
